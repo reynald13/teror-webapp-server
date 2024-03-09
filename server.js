@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const config = require('./database/db.js');
+const config = require('./dabatase/db.js');
 const participantRouter = require('./routes/participants.js');
 
 mongoose.connect(config.DB, { useNewUrlParser: true, useUnifiedTopology: true })
