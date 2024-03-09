@@ -7,7 +7,7 @@ const cors = require('cors');
 const config = require('./dabatase/db.js');
 const participantRouter = require('./routes/participants.js');
 
-mongoose.connect(config.DB, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(config.DB)
     .then(() => console.log('Database is connected'))
     .catch(err => {
         console.error('Failed to connect to the database:', err);
