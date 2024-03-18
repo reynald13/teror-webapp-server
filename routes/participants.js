@@ -28,7 +28,7 @@ router.post('/scores', async (req, res) => {
 
         // Perbarui poin peserta jika ditemukan
         if (participant) {
-            participant.points += points;
+            participant.points = points;
             participant.pointsPerQuestion = pointsPerQuestion; // Menetapkan poin per pertanyaan
             await participant.save();
             res.status(200).json({ message: 'Poin berhasil disimpan', participant });
