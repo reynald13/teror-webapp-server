@@ -21,14 +21,14 @@ router.post('/participants', async (req, res) => {
 
 router.post('/scores', async (req, res) => {
     try {
-        const { name, totalPoints, pointsPerQuestion } = req.body;
+        const { name, points, pointsPerQuestion } = req.body;
 
         // Temukan peserta berdasarkan nama
         const participant = await Participant.findOne({ name });
 
         // Perbarui poin peserta jika ditemukan
         if (participant) {
-            participant.points += totalPoints;
+            participant.points += points;
             participant.pointsPerQuestion = pointsPerQuestion; // Menetapkan poin per pertanyaan
             await participant.save();
             res.status(200).json({ message: 'Poin berhasil disimpan', participant });
