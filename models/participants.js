@@ -7,7 +7,9 @@ const participantSchema = new mongoose.Schema({
   phone: { type: String, required: true, unique: true, match: /^\d{10,12}$/ },
   city: { type: String, required: true },
   age: { type: String, required: true },
-  points: { type: Number, default: 0 }
+  points: { type: Number, default: 0 },
+  // Tambahkan array untuk menyimpan poin per pertanyaan
+  pointsPerQuestion: [Number] // Menyimpan poin yang dipilih oleh pengguna untuk setiap pertanyaan
 });
 
 // Menambahkan indeks pada bidang 'city' untuk pencarian lebih cepat

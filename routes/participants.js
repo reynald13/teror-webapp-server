@@ -8,7 +8,9 @@ router.post('/participants', async (req, res) => {
     try {
         // Melakukan sanitasi data sebelum menyimpan
         const sanitizedData = sanitize(req.body);
-        const participant = new Participant(sanitizedData);
+        const { pointsPerQuestion, ...participantData } = sanitizedData; // Memisahkan data poin per pertanyaan dari data peserta
+        const participant = new Participant(participantData); // Membuat objek participant dengan data peserta tanpa poin per pertanyaan
+        participant.pointsPerQuestion = pointsPerQuestion; // Menetapkan poin per pertanyaan ke objek participant
         await participant.save();
         res.json({ message: 'Participant added successfully' });
     } catch (error) {
@@ -19,14 +21,15 @@ router.post('/participants', async (req, res) => {
 
 router.post('/scores', async (req, res) => {
     try {
-        const { name, points } = req.body;
+        const { name, totalPoints, pointsPerQuestion } = req.body;
 
         // Temukan peserta berdasarkan nama
         const participant = await Participant.findOne({ name });
 
         // Perbarui poin peserta jika ditemukan
         if (participant) {
-            participant.points += points;
+            participant.points += totalPoints;
+            participant.pointsPerQuestion = pointsPerQuestion; // Menetapkan poin per pertanyaan
             await participant.save();
             res.status(200).json({ message: 'Poin berhasil disimpan', participant });
         } else {
